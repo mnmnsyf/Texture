@@ -2,6 +2,10 @@
 # the static gallery files and assets referenced by data/results.js.
 *
 
+# Local-only archives and experimental staging stay untracked.
+archive/
+raw/
+
 # Unignore parent directories needed for whitelisted files.
 !assets/
 !data/
@@ -62,6 +66,7 @@
 !Hunyuan/transformer_texture_test/transformer_merged.obj
 !Hunyuan/transformer_texture_test/transformer_textured.jpg
 !index.html
+!README.md
 !input_images/bicycle.jpg
 !input_images/scissors.jpg
 !input_images/stitcher.jpg
@@ -112,8 +117,9 @@
 
 # Local/editor/cache files remain ignored.
 __pycache__/
+# Keep only one working virtual environment in the repo root.
 .venv/
-.venv-1/
+.venv-*/
 venv/
 env/
 .pytest_cache/
