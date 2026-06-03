@@ -11,23 +11,20 @@
           extend: {
             fontFamily: {
               sans: [
-                "Inter",
-                "ui-sans-serif",
-                "system-ui",
                 "-apple-system",
                 "BlinkMacSystemFont",
+                "Inter",
+                "SF Pro Display",
+                "SF Pro Text",
                 "Segoe UI",
+                "system-ui",
                 "sans-serif",
               ],
             },
             colors: {
-              ink: "#0f172a",
-              night: "#111827",
-              cyanGlow: "#22d3ee",
-              violetGlow: "#8b5cf6",
-            },
-            boxShadow: {
-              glow: "0 24px 80px rgba(34, 211, 238, 0.12)",
+              appleBlack: "#1D1D1F",
+              appleGray: "#86868B",
+              appleBg: "#F5F5F7",
             },
           },
         },
@@ -37,59 +34,36 @@
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   </head>
-  <body
-    class="min-h-screen overflow-x-hidden bg-slate-950 text-slate-100 antialiased selection:bg-cyan-300 selection:text-slate-950"
-  >
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div
-        class="absolute left-[-10rem] top-[-12rem] h-[34rem] w-[34rem] rounded-full bg-cyan-400/10 blur-3xl"
-      ></div>
-      <div
-        class="absolute right-[-8rem] top-[8rem] h-[28rem] w-[28rem] rounded-full bg-violet-500/10 blur-3xl"
-      ></div>
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_34rem)]"></div>
-    </div>
-
-    <header class="mx-auto flex w-full max-w-[1480px] flex-col gap-8 px-5 pb-8 pt-10 sm:px-8 lg:px-10 lg:pt-14 xl:flex-row xl:items-end xl:justify-between">
-      <div class="max-w-3xl">
-        <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200">
-          <i data-lucide="sparkles" class="h-3.5 w-3.5"></i>
+  <body class="min-h-screen overflow-x-hidden bg-[#F5F5F7] text-[#1D1D1F] antialiased selection:bg-neutral-900 selection:text-white">
+    <header class="mx-auto flex w-full max-w-[1540px] flex-col gap-12 px-4 pb-10 pt-14 sm:px-10 lg:px-14 lg:pb-16 lg:pt-20 xl:flex-row xl:items-end xl:justify-between">
+      <div class="max-w-4xl">
+        <p class="mb-5 text-xs font-semibold uppercase tracking-[0.24em] text-[#86868B]">
           Kinematic Texture Benchmark
-        </div>
-        <h1
-          id="page-title"
-          class="text-balance text-5xl font-black tracking-tight text-slate-50 sm:text-6xl lg:text-7xl"
-        >
+        </p>
+        <h1 id="page-title" class="max-w-4xl text-balance text-5xl font-semibold tracking-[-0.055em] text-[#1D1D1F] sm:text-6xl lg:text-7xl">
           Mesh Generation Gallery
         </h1>
-        <p id="page-subtitle" class="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
+        <p id="page-subtitle" class="mt-6 max-w-2xl text-lg leading-8 text-[#86868B] sm:text-xl">
           Texture benchmark outputs collected from this repository.
         </p>
       </div>
 
-      <section
-        id="stats"
-        class="grid w-full grid-cols-1 gap-3 min-[520px]:grid-cols-3 sm:max-w-xl"
-        aria-label="Gallery summary"
-      ></section>
+      <section id="stats" class="flex w-full flex-col gap-6 sm:w-auto sm:flex-row sm:items-end" aria-label="Gallery summary"></section>
     </header>
 
-    <main class="mx-auto w-full max-w-[1480px] px-5 pb-16 sm:px-8 lg:px-10">
-      <section id="gallery" class="space-y-6" aria-label="Mesh generation benchmark cases"></section>
+    <main class="mx-auto w-full max-w-[1540px] px-4 pb-20 sm:px-10 lg:px-14">
+      <section id="gallery" class="space-y-4 lg:space-y-5" aria-label="Mesh generation benchmark cases"></section>
     </main>
 
-    <dialog id="asset-dialog" class="asset-dialog rounded-3xl bg-transparent p-0 text-slate-100 backdrop:bg-slate-950/80">
-      <form
-        method="dialog"
-        class="dialog-frame overflow-hidden rounded-3xl border border-white/10 bg-slate-950/95 shadow-2xl shadow-cyan-950/30 backdrop-blur-xl"
-      >
-        <div class="flex items-start justify-between gap-5 border-b border-white/10 px-5 py-4 sm:px-6">
+    <dialog id="asset-dialog" class="asset-dialog rounded-[2rem] bg-transparent p-0 text-[#1D1D1F] backdrop:bg-black/30">
+      <form method="dialog" class="dialog-frame overflow-hidden rounded-[2rem] border border-neutral-200/70 bg-[#F5F5F7] shadow-2xl shadow-black/10">
+        <div class="flex items-start justify-between gap-6 border-b border-neutral-200/70 bg-white/80 px-6 py-5 backdrop-blur-xl">
           <div>
-            <p id="dialog-kicker" class="text-xs font-bold uppercase tracking-[0.22em] text-cyan-200"></p>
-            <h2 id="dialog-title" class="mt-1 text-xl font-bold text-white"></h2>
+            <p id="dialog-kicker" class="text-xs font-semibold uppercase tracking-[0.2em] text-[#86868B]"></p>
+            <h2 id="dialog-title" class="mt-1 text-2xl font-semibold tracking-[-0.025em] text-[#1D1D1F]"></h2>
           </div>
           <button
-            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:border-cyan-300/50 hover:bg-cyan-300/10 hover:text-white"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-neutral-200/80 text-neutral-700 transition-all duration-300 ease-out hover:bg-neutral-300 hover:text-black"
             value="close"
             aria-label="Close preview"
             title="Close preview"
@@ -97,8 +71,8 @@
             <i data-lucide="x" class="h-5 w-5" aria-hidden="true"></i>
           </button>
         </div>
-        <div id="dialog-stage" class="grid min-h-[60vh] place-items-center bg-slate-900/70"></div>
-        <div id="dialog-links" class="flex flex-wrap gap-2 border-t border-white/10 px-5 py-4 sm:px-6"></div>
+        <div id="dialog-stage" class="grid min-h-[60vh] place-items-center bg-neutral-100"></div>
+        <div id="dialog-links" class="flex flex-wrap gap-2 border-t border-neutral-200/70 bg-white/75 px-6 py-4"></div>
       </form>
     </dialog>
 

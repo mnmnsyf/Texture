@@ -27,23 +27,17 @@
 
   function renderStats() {
     const stats = [
-      { value: data.cases.length, label: "Cases", iconName: "layers-3" },
-      { value: data.methods.length, label: "Methods", iconName: "workflow" },
-      { value: countAssets(data.cases), label: "Assets", iconName: "box" },
+      { value: data.cases.length, label: "Cases" },
+      { value: data.methods.length, label: "Methods" },
+      { value: countAssets(data.cases), label: "Assets" },
     ];
 
     els.stats.innerHTML = stats
       .map(
-        (stat) => `
-          <article class="group rounded-2xl border border-white/10 bg-white/[0.07] p-4 shadow-glow backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-white/[0.1]">
-            <div class="mb-3 flex items-center justify-between">
-              <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-300/10 text-cyan-200 ring-1 ring-cyan-300/20">
-                ${icon(stat.iconName)}
-              </span>
-              <span class="h-1.5 w-1.5 rounded-full bg-cyan-300/80 shadow-[0_0_16px_rgba(34,211,238,0.9)]"></span>
-            </div>
-            <div class="text-3xl font-black tracking-tight text-white">${stat.value}</div>
-            <div class="mt-1 text-xs font-bold uppercase tracking-[0.2em] text-slate-400">${stat.label}</div>
+        (stat, index) => `
+          <article class="stat-metric ${index > 0 ? "sm:border-l sm:border-neutral-300/70 sm:pl-8" : ""}">
+            <div class="text-4xl font-semibold tracking-[-0.045em] text-[#1D1D1F]">${stat.value}</div>
+            <div class="mt-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#86868B]">${stat.label}</div>
           </article>
         `,
       )
@@ -65,7 +59,7 @@
             href="${link.href}"
             target="_blank"
             rel="noreferrer"
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:text-white"
+            class="inline-flex items-center gap-2 rounded-full bg-neutral-200/80 px-3 py-2 text-sm font-medium text-[#1D1D1F] transition-all duration-300 ease-out hover:bg-neutral-300"
             title="${link.label}"
           >
             ${icon(link.iconName)}
@@ -79,26 +73,25 @@
   function renderPreviewButton(cell, item, methodId, label, size = "default") {
     const preview = cell.preview || cell.texture;
     const canOpen = preview || isViewableMesh(cell.mesh);
-    const heightClass = size === "input" ? "h-56 lg:h-52" : "h-52";
+    const heightClass = size === "input" ? "h-52 lg:h-56" : "h-52 lg:h-56";
 
     return `
       <button
-        class="asset-trigger group/image relative block w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900/70 ${heightClass} transition duration-300 hover:border-cyan-300/45 hover:shadow-[0_24px_70px_rgba(34,211,238,0.16)] focus:outline-none focus:ring-2 focus:ring-cyan-300/60"
+        class="asset-trigger group/image relative block w-full overflow-hidden rounded-2xl bg-neutral-100 ${heightClass} transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-neutral-200/70 focus:outline-none focus:ring-4 focus:ring-neutral-300/60"
         type="button"
         data-case="${item.id}"
         data-method="${methodId}"
         ${canOpen ? "" : "disabled"}
         title="${label} preview"
       >
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_70%)]"></div>
         <img
-          class="relative h-full w-full object-contain p-5 transition duration-500 group-hover/image:scale-[1.035]"
+          class="h-full w-full object-contain p-6 transition-all duration-300 ease-out group-hover/image:scale-[1.012]"
           src="${preview}"
           alt="${item.name} ${label}"
           loading="lazy"
         />
-        <span class="pointer-events-none absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-slate-950/60 text-slate-200 opacity-0 shadow-lg backdrop-blur transition duration-300 group-hover/image:opacity-100">
-          ${icon("maximize-2")}
+        <span class="pointer-events-none absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-neutral-700 opacity-0 shadow-sm ring-1 ring-neutral-200/80 backdrop-blur transition-all duration-300 ease-out group-hover/image:opacity-100">
+          ${icon("maximize-2", "h-3.5 w-3.5")}
         </span>
       </button>
     `;
@@ -106,13 +99,13 @@
 
   function renderInputCard(item) {
     return `
-      <article class="min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.055] p-4 backdrop-blur-xl lg:col-span-3">
-        <div class="mb-3 flex items-center justify-between gap-3">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-[0.22em] text-cyan-200">Input Source</p>
-            <h3 class="mt-1 text-lg font-bold text-white">${item.name}</h3>
+      <article class="asset-card min-w-0 overflow-hidden rounded-[1.35rem] bg-white p-3 ring-1 ring-neutral-200/70 lg:col-span-1">
+        <div class="mb-3 flex flex-col items-start gap-2 px-1 sm:flex-row sm:justify-between">
+          <div class="min-w-0">
+            <p class="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#86868B]">Input Source</p>
+            <h3 class="mt-1 truncate text-base font-semibold tracking-[-0.02em] text-[#1D1D1F]">${item.name}</h3>
           </div>
-          <span class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-300">
+          <span class="shrink-0 rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-700">
             source
           </span>
         </div>
@@ -126,24 +119,24 @@
 
     if (!cell) {
       return `
-        <article class="flex min-h-72 min-w-0 flex-col overflow-hidden rounded-3xl border border-dashed border-white/10 bg-white/[0.035] p-4 text-slate-500">
-          <div class="mb-3 flex items-center justify-between gap-3">
-            <h3 class="min-w-0 truncate text-lg font-bold text-slate-400">${method.name}</h3>
-            <span class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold">${method.tag}</span>
+        <article class="asset-card flex min-h-72 min-w-0 flex-col overflow-hidden rounded-[1.35rem] bg-white p-3 ring-1 ring-neutral-200/70">
+          <div class="mb-3 flex flex-col items-start gap-2 px-1 sm:flex-row sm:justify-between">
+            <h3 class="min-w-0 truncate text-base font-semibold tracking-[-0.02em] text-[#1D1D1F]">${method.name}</h3>
+            <span class="max-w-full shrink-0 truncate rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-700">${method.tag}</span>
           </div>
-          <div class="grid flex-1 place-items-center rounded-2xl bg-slate-900/50 text-sm font-bold uppercase tracking-[0.2em]">Missing</div>
+          <div class="grid flex-1 place-items-center rounded-2xl bg-neutral-100 text-xs font-semibold uppercase tracking-[0.18em] text-[#86868B]">Missing</div>
         </article>
       `;
     }
 
     return `
-      <article class="method-card min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.055] p-4 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-white/[0.075] hover:shadow-[0_26px_80px_rgba(15,23,42,0.45)]">
-        <div class="mb-3 flex items-start justify-between gap-3">
+      <article class="asset-card min-w-0 overflow-hidden rounded-[1.35rem] bg-white p-3 ring-1 ring-neutral-200/70 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:ring-neutral-300">
+        <div class="mb-3 flex flex-col items-start gap-2 px-1 sm:flex-row sm:justify-between">
           <div class="min-w-0">
-            <h3 class="truncate text-lg font-bold text-white">${method.name}</h3>
-            <p class="mt-1 text-sm text-slate-400">Generated output</p>
+            <h3 class="truncate text-base font-semibold tracking-[-0.02em] text-[#1D1D1F]">${method.name}</h3>
+            <p class="mt-0.5 text-sm text-[#86868B]">Generated output</p>
           </div>
-          <span class="max-w-[48%] shrink-0 truncate rounded-full border border-violet-300/20 bg-violet-300/10 px-3 py-1 text-xs font-semibold text-violet-100">
+          <span class="max-w-full shrink-0 truncate rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-700 sm:max-w-[50%]">
             ${method.tag}
           </span>
         </div>
@@ -156,21 +149,17 @@
     const methodCards = data.methods.map((method) => renderMethodCard(item, method)).join("");
 
     return `
-      <section class="case-block overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.045] p-4 shadow-2xl shadow-slate-950/30 backdrop-blur-xl sm:p-5 lg:p-6" style="--delay: ${index * 70}ms">
-        <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-[0.24em] text-slate-500">Benchmark Case</p>
-            <h2 class="mt-1 text-3xl font-black tracking-tight text-white">${item.name}</h2>
-          </div>
-          <div class="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1.5 text-sm font-semibold text-cyan-100">
-            ${icon("scan-search")}
-            <span>${data.methods.length} methods compared</span>
-          </div>
-        </div>
-        <div class="grid gap-4 lg:grid-cols-15">
-          ${renderInputCard(item)}
-          <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 lg:col-span-12">
-            ${methodCards}
+      <section class="case-row min-w-0 overflow-hidden rounded-[2rem] bg-white/70 px-4 py-5 ring-1 ring-neutral-200/60 backdrop-blur-sm sm:px-5 sm:py-6 lg:px-6" style="--delay: ${index * 50}ms">
+        <div class="grid min-w-0 gap-5 lg:grid-cols-[150px_minmax(0,1fr)] xl:grid-cols-[170px_minmax(0,1fr)]">
+          <aside class="case-label lg:sticky lg:top-6">
+            <p class="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#86868B]">Case</p>
+            <h2 class="mt-2 text-2xl font-semibold tracking-[-0.035em] text-[#1D1D1F]">${item.name}</h2>
+          </aside>
+          <div class="grid min-w-0 gap-4 lg:grid-cols-5">
+            ${renderInputCard(item)}
+            <div class="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-4 lg:col-span-4">
+              ${methodCards}
+            </div>
           </div>
         </div>
       </section>
@@ -224,7 +213,7 @@
         </model-viewer>
       `;
     } else {
-      els.dialogStage.innerHTML = `<img class="max-h-[70vh] w-full object-contain p-6" src="${cell.preview || cell.texture}" alt="${item.name} ${name}" />`;
+      els.dialogStage.innerHTML = `<img class="max-h-[70vh] w-full object-contain p-8" src="${cell.preview || cell.texture}" alt="${item.name} ${name}" />`;
     }
 
     els.dialog.showModal();
