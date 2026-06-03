@@ -9,7 +9,7 @@ body {
 }
 
 .site-shell {
-  width: min(1740px, calc(100vw - 32px));
+  width: min(1720px, calc(100vw - 96px));
   margin-inline: auto;
 }
 
@@ -215,6 +215,10 @@ body {
 }
 
 @media (max-width: 1279px) {
+  .site-shell {
+    width: min(100% - 64px, 1720px);
+  }
+
   .site-header {
     align-items: flex-start;
     flex-direction: column;
@@ -245,7 +249,7 @@ body {
 
 @media (max-width: 639px) {
   .site-shell {
-    width: min(100% - 32px, 1740px);
+    width: min(100% - 32px, 1720px);
   }
 
   .site-header {
