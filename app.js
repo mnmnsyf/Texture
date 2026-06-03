@@ -35,9 +35,9 @@
     els.stats.innerHTML = stats
       .map(
         (stat, index) => `
-          <article class="stat-metric ${index > 0 ? "sm:border-l sm:border-neutral-300/70 sm:pl-8" : ""}">
-            <div class="text-4xl font-semibold tracking-[-0.045em] text-[#1D1D1F]">${stat.value}</div>
-            <div class="mt-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#86868B]">${stat.label}</div>
+          <article class="stat-metric ${index > 0 ? "stat-divider" : ""}">
+            <div class="stat-value">${stat.value}</div>
+            <div class="stat-label">${stat.label}</div>
           </article>
         `,
       )
@@ -73,11 +73,9 @@
   function renderPreviewButton(cell, item, methodId, label, size = "default") {
     const preview = cell.preview || cell.texture;
     const canOpen = preview || isViewableMesh(cell.mesh);
-    const heightClass = size === "input" ? "h-52 lg:h-56" : "h-52 lg:h-56";
-
     return `
       <button
-        class="asset-trigger group/image relative block w-full overflow-hidden rounded-2xl bg-neutral-100 ${heightClass} transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-neutral-200/70 focus:outline-none focus:ring-4 focus:ring-neutral-300/60"
+        class="asset-trigger asset-viewport group/image relative block w-full overflow-hidden rounded-2xl bg-neutral-100 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-neutral-200/70 focus:outline-none focus:ring-4 focus:ring-neutral-300/60 ${size === "input" ? "asset-viewport-input" : ""}"
         type="button"
         data-case="${item.id}"
         data-method="${methodId}"
@@ -99,8 +97,8 @@
 
   function renderInputCard(item) {
     return `
-      <article class="asset-card min-w-0 overflow-hidden rounded-[1.35rem] bg-white p-3 ring-1 ring-neutral-200/70 lg:col-span-1">
-        <div class="mb-3 flex flex-col items-start gap-2 px-1 sm:flex-row sm:justify-between">
+      <article class="asset-card input-card min-w-0 overflow-hidden rounded-[1.35rem] bg-white p-3 ring-1 ring-neutral-200/70">
+        <div class="asset-card-header">
           <div class="min-w-0">
             <p class="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#86868B]">Input Source</p>
             <h3 class="mt-1 truncate text-base font-semibold tracking-[-0.02em] text-[#1D1D1F]">${item.name}</h3>
@@ -120,7 +118,7 @@
     if (!cell) {
       return `
         <article class="asset-card flex min-h-72 min-w-0 flex-col overflow-hidden rounded-[1.35rem] bg-white p-3 ring-1 ring-neutral-200/70">
-          <div class="mb-3 flex flex-col items-start gap-2 px-1 sm:flex-row sm:justify-between">
+          <div class="asset-card-header">
             <h3 class="min-w-0 truncate text-base font-semibold tracking-[-0.02em] text-[#1D1D1F]">${method.name}</h3>
             <span class="max-w-full shrink-0 truncate rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-700">${method.tag}</span>
           </div>
@@ -131,7 +129,7 @@
 
     return `
       <article class="asset-card min-w-0 overflow-hidden rounded-[1.35rem] bg-white p-3 ring-1 ring-neutral-200/70 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:ring-neutral-300">
-        <div class="mb-3 flex flex-col items-start gap-2 px-1 sm:flex-row sm:justify-between">
+        <div class="asset-card-header">
           <div class="min-w-0">
             <h3 class="truncate text-base font-semibold tracking-[-0.02em] text-[#1D1D1F]">${method.name}</h3>
             <p class="mt-0.5 text-sm text-[#86868B]">Generated output</p>
@@ -149,15 +147,15 @@
     const methodCards = data.methods.map((method) => renderMethodCard(item, method)).join("");
 
     return `
-      <section class="case-row min-w-0 overflow-hidden rounded-[2rem] bg-white/70 px-4 py-5 ring-1 ring-neutral-200/60 backdrop-blur-sm sm:px-5 sm:py-6 lg:px-6" style="--delay: ${index * 50}ms">
-        <div class="grid min-w-0 gap-5 lg:grid-cols-[150px_minmax(0,1fr)] xl:grid-cols-[170px_minmax(0,1fr)]">
-          <aside class="case-label lg:sticky lg:top-6">
+      <section class="case-row min-w-0 overflow-hidden rounded-[2rem] bg-white/70 ring-1 ring-neutral-200/60 backdrop-blur-sm" style="--delay: ${index * 50}ms">
+        <div class="case-layout">
+          <aside class="case-label">
             <p class="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#86868B]">Case</p>
             <h2 class="mt-2 text-2xl font-semibold tracking-[-0.035em] text-[#1D1D1F]">${item.name}</h2>
           </aside>
-          <div class="grid min-w-0 gap-4 lg:grid-cols-5">
+          <div class="asset-strip">
             ${renderInputCard(item)}
-            <div class="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-4 lg:col-span-4">
+            <div class="method-strip">
               ${methodCards}
             </div>
           </div>

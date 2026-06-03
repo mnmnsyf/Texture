@@ -30,28 +30,28 @@
         },
       };
     </script>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=apple-gallery-3" />
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   </head>
   <body class="min-h-screen overflow-x-hidden bg-[#F5F5F7] text-[#1D1D1F] antialiased selection:bg-neutral-900 selection:text-white">
-    <header class="mx-auto flex w-full max-w-[1540px] flex-col gap-12 px-4 pb-10 pt-14 sm:px-10 lg:px-14 lg:pb-16 lg:pt-20 xl:flex-row xl:items-end xl:justify-between">
-      <div class="max-w-4xl">
-        <p class="mb-5 text-xs font-semibold uppercase tracking-[0.24em] text-[#86868B]">
+    <header class="site-shell site-header">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">
           Kinematic Texture Benchmark
         </p>
-        <h1 id="page-title" class="max-w-4xl text-balance text-5xl font-semibold tracking-[-0.055em] text-[#1D1D1F] sm:text-6xl lg:text-7xl">
+        <h1 id="page-title" class="hero-title">
           Mesh Generation Gallery
         </h1>
-        <p id="page-subtitle" class="mt-6 max-w-2xl text-lg leading-8 text-[#86868B] sm:text-xl">
+        <p id="page-subtitle" class="hero-subtitle">
           Texture benchmark outputs collected from this repository.
         </p>
       </div>
 
-      <section id="stats" class="flex w-full flex-col gap-6 sm:w-auto sm:flex-row sm:items-end" aria-label="Gallery summary"></section>
+      <section id="stats" class="stats-panel" aria-label="Gallery summary"></section>
     </header>
 
-    <main class="mx-auto w-full max-w-[1540px] px-4 pb-20 sm:px-10 lg:px-14">
+    <main class="site-shell page-main">
       <section id="gallery" class="space-y-4 lg:space-y-5" aria-label="Mesh generation benchmark cases"></section>
     </main>
 
@@ -76,7 +76,7 @@
       </form>
     </dialog>
 
-    <script src="data/results.js"></script>
-    <script src="app.js"></script>
+    <script src="data/results.js?v=apple-gallery-3"></script>
+    <script src="app.js?v=apple-gallery-3"></script>
   </body>
 </html>
