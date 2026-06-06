@@ -24,6 +24,7 @@ raw/
 !MaterialMVP/transformer_output/
 !MaterialMVP/transformer_output/merged_output/
 !Meshy/
+!scripts/
 !Test_Model/
 !Test_Model/bicycle/
 !Test_Model/scissors/
@@ -67,6 +68,7 @@ raw/
 !Hunyuan/transformer_texture_test/transformer_textured.jpg
 !index.html
 !README.md
+!scripts/render_gallery_previews_blender.py
 !input_images/bicycle.jpg
 !input_images/scissors.jpg
 !input_images/stitcher.jpg
