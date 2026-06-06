@@ -127,12 +127,15 @@
       `;
     }
 
+    const partCount = typeof cell.partCount === "number" ? cell.partCount : null;
+    const partLabel = partCount === null ? "Generated output" : `${partCount} part${partCount === 1 ? "" : "s"}`;
+
     return `
       <article class="asset-card min-w-0 overflow-hidden rounded-[1.35rem] bg-white p-3 ring-1 ring-neutral-200/70 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:ring-neutral-300">
         <div class="asset-card-header">
           <div class="min-w-0">
             <h3 class="truncate text-base font-semibold tracking-[-0.02em] text-[#1D1D1F]">${method.name}</h3>
-            <p class="mt-0.5 text-sm text-[#86868B]">Generated output</p>
+            <p class="mt-0.5 text-sm text-[#86868B]">${partLabel}</p>
           </div>
           <span class="max-w-full shrink-0 truncate rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-700 sm:max-w-[50%]">
             ${method.tag}
