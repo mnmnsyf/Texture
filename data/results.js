@@ -204,7 +204,7 @@ window.GALLERY_DATA = {
         },
         hunyuan: {
           preview: "Hunyuan/transformer_texture_test/hunyuan_result.png",
-          mesh: "Hunyuan/transformer_texture_test/transformer_merged.obj",
+          mesh: "Hunyuan/transformer_texture_test/transformer_textured.obj",
           texture: "Hunyuan/transformer_texture_test/transformer_textured.jpg",
           partCount: 1,
           status: "ready",

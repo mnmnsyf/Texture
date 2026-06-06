@@ -72,7 +72,7 @@ CASE_SPECS: tuple[tuple[str, str, str, str], ...] = (
     ("hunyuan", "scissors", "Hunyuan/scissors_texture_test/scissors_textured.obj", "Hunyuan/Hunyuan_scissors.png"),
     ("hunyuan", "stitcher", "Hunyuan/stitcher_texture_test/stitcher_textured.obj", "Hunyuan/Hunyuan_stitcher.png"),
     ("hunyuan", "telescope", "Hunyuan/telescope_texture_test/telescope_textured.obj", "Hunyuan/Hunyuan_telescope.png"),
-    ("hunyuan", "transformer", "Hunyuan/transformer_texture_test/transformer_merged.obj", "Hunyuan/transformer_texture_test/hunyuan_result.png"),
+    ("hunyuan", "transformer", "Hunyuan/transformer_texture_test/transformer_textured.obj", "Hunyuan/transformer_texture_test/hunyuan_result.png"),
 )
 
 
