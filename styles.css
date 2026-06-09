@@ -162,6 +162,42 @@ body {
   transform: translateZ(0);
 }
 
+.asset-health-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 4px 12px;
+}
+
+.asset-health-copy {
+  color: #86868b;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.asset-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  padding: 0.38rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.asset-badge-ok {
+  background: rgba(34, 197, 94, 0.14);
+  color: #166534;
+}
+
+.asset-badge-bad {
+  background: rgba(239, 68, 68, 0.14);
+  color: #991b1b;
+}
+
 .asset-viewport {
   height: 270px;
   margin-top: auto;
@@ -308,6 +344,12 @@ body {
 
   .asset-card-header {
     flex-direction: column;
+  }
+
+  .asset-health-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .asset-card-header > div,

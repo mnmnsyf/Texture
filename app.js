@@ -14,9 +14,70 @@
   };
 
   const icon = (name, className = "h-4 w-4") => `<i data-lucide="${name}" class="${className}" aria-hidden="true"></i>`;
+  const MISSING_OUTPUT_PREVIEW = "assets/missing-output.svg";
+
+  const WATERTIGHT_REASON_LABELS = {
+    all_scene_geometries_closed_manifold: "Closed manifold",
+    scene_contains_non_watertight_geometry: "Open boundaries detected",
+    closed_manifold: "Closed manifold",
+    has_boundary_edges: "Open boundaries detected",
+    has_nonmanifold_edges: "Non-manifold edges detected",
+    load_or_parse_error: "Could not evaluate mesh",
+  };
 
   function isViewableMesh(path) {
     return /\.(glb|gltf)$/i.test(path || "");
+  }
+
+  function normalizeAssetPath(path) {
+    return String(path || "").replace(/^\.\//, "").replace(/\\/g, "/");
+  }
+
+  function getWatertightInfo(cell) {
+    if (!cell || !cell.mesh || !data.watertightness) {
+      return null;
+    }
+
+    return data.watertightness[normalizeAssetPath(cell.mesh)] || null;
+  }
+
+  function renderWatertightBadge(info) {
+    if (!info) return "";
+
+    const toneClass = info.isWatertight ? "asset-badge-ok" : "asset-badge-bad";
+    const iconName = info.isWatertight ? "shield-check" : "triangle-alert";
+
+    return `
+      <span class="asset-badge ${toneClass}" title="${info.label}">
+        ${icon(iconName, "h-3.5 w-3.5")}
+        <span>${info.label}</span>
+      </span>
+    `;
+  }
+
+  function renderWatertightSummary(cell) {
+    const info = getWatertightInfo(cell);
+    if (!info) return "";
+
+    const secondaryParts = [];
+    if (!info.isWatertight && Number.isFinite(info.boundaryEdges)) {
+      secondaryParts.push(`${info.boundaryEdges} boundary edge${info.boundaryEdges === 1 ? "" : "s"}`);
+    }
+    if (!info.isWatertight && Number.isFinite(info.nonmanifoldEdges) && info.nonmanifoldEdges > 0) {
+      secondaryParts.push(`${info.nonmanifoldEdges} non-manifold edge${info.nonmanifoldEdges === 1 ? "" : "s"}`);
+    }
+    if (Number.isFinite(info.componentCount) && info.componentCount > 1) {
+      secondaryParts.push(`${info.componentCount} components`);
+    }
+
+    const detail = secondaryParts.join(" · ") || WATERTIGHT_REASON_LABELS[info.reason] || info.reason || info.label;
+
+    return `
+      <div class="asset-health-row">
+        ${renderWatertightBadge(info)}
+        <p class="asset-health-copy">${detail}</p>
+      </div>
+    `;
   }
 
   function countAssets(cases) {
@@ -107,6 +168,7 @@
             source
           </span>
         </div>
+        ${renderWatertightSummary(item.input)}
         ${renderPreviewButton(item.input, item, "input", "Input", "input")}
       </article>
     `;
@@ -122,7 +184,14 @@
             <h3 class="min-w-0 truncate text-base font-semibold tracking-[-0.02em] text-[#1D1D1F]">${method.name}</h3>
             <span class="max-w-full shrink-0 truncate rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-700">${method.tag}</span>
           </div>
-          <div class="grid flex-1 place-items-center rounded-2xl bg-neutral-100 text-xs font-semibold uppercase tracking-[0.18em] text-[#86868B]">Missing</div>
+          <div class="asset-viewport missing-output-viewport overflow-hidden rounded-2xl bg-neutral-100">
+            <img
+              class="h-full w-full object-cover"
+              src="${MISSING_OUTPUT_PREVIEW}"
+              alt="${method.name} missing output placeholder"
+              loading="lazy"
+            />
+          </div>
         </article>
       `;
     }
@@ -141,6 +210,7 @@
             ${method.tag}
           </span>
         </div>
+        ${renderWatertightSummary(cell)}
         ${renderPreviewButton(cell, item, method.id, method.name)}
       </article>
     `;
